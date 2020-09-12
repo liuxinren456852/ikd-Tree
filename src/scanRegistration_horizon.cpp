@@ -131,6 +131,8 @@ void laserCloudHandler(const sensor_msgs::PointCloud2ConstPtr& laserCloudMsg)
 
   if(cloudSize > 32000) cloudSize = 32000;
 
+  std::cout<<"cloud size: "<<cloudSize<<std::endl;
+
   PointType point;
   std::vector<pcl::PointCloud<PointType>> laserCloudScans(N_SCANS);
   for (int i = 0; i < cloudSize; i++) {
@@ -455,7 +457,7 @@ void laserCloudHandler(const sensor_msgs::PointCloud2ConstPtr& laserCloudMsg)
     } 
   }
 
-  if (0)
+  if (1)
   {
     std::cout<<"ALL point: "<<cloudSize<<" outliers: "<< debugnum1 << std::endl
             <<" break points: "<< debugnum2<<" break feature: "<< debugnum3 << std::endl
@@ -498,7 +500,7 @@ int main(int argc, char** argv)
   //                                ("/livox/lidar_temp", 2);
   
   ros::Subscriber subLaserCloud = nh.subscribe<sensor_msgs::PointCloud2>
-                                  ("/livox_pcl0", 100, laserCloudHandler);
+                                  ("/livox_undistort", 100, laserCloudHandler);
   pubLaserCloud = nh.advertise<sensor_msgs::PointCloud2>
                                  ("/livox_cloud", 100);
 

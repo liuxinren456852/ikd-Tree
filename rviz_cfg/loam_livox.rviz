@@ -44,7 +44,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: ""
+    SyncSource: surround
 Preferences:
   PromptSaveOnExit: true
 Toolbars:
@@ -212,8 +212,8 @@ Visualization Manager:
         - Alpha: 0.4000000059604645
           Autocompute Intensity Bounds: true
           Autocompute Value Bounds:
-            Max Value: 0.969338059425354
-            Min Value: -2.661465883255005
+            Max Value: 0.9608377814292908
+            Min Value: -2.623389959335327
             Value: true
           Axis: Z
           Channel Name: intensity
@@ -604,25 +604,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 14.320889472961426
+      Distance: 22.31466293334961
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 3.528653621673584
-        Y: -1.8537869453430176
-        Z: 1.0576752424240112
+        X: 4.131285190582275
+        Y: 1.1022028923034668
+        Z: 0.875353217124939
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: true
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 1.4247970581054688
+      Pitch: 1.5697963237762451
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 6.194620609283447
+      Yaw: 3.1114330291748047
     Saved: ~
 Window Geometry:
   Displays:

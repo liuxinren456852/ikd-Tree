@@ -232,7 +232,6 @@ void RGBpointAssociateToMap(PointType const * const pi, pcl::PointXYZRGB * const
     }
 }
 
-// #ifdef USING_CORNER
 void laserCloudCornerLastHandler(const sensor_msgs::PointCloud2ConstPtr& laserCloudCornerLast2)
 {
     timeLaserCloudCornerLast = laserCloudCornerLast2->header.stamp.toSec();
@@ -242,7 +241,6 @@ void laserCloudCornerLastHandler(const sensor_msgs::PointCloud2ConstPtr& laserCl
 
     newLaserCloudCornerLast = true;
 }
-// #endif
 
 void laserCloudSurfLastHandler(const sensor_msgs::PointCloud2ConstPtr& laserCloudSurfLast2)
 {
@@ -304,19 +302,20 @@ int main(int argc, char** argv)
     ros::init(argc, argv, "laserMapping");
     ros::NodeHandle nh;
 
+#ifdef USING_CORNER
     ros::Subscriber subLaserCloudCornerLast = nh.subscribe<sensor_msgs::PointCloud2>
             ("/laser_cloud_sharp", 100, laserCloudCornerLastHandler);
-
-#ifdef USING_CORNER
     ros::Subscriber subLaserCloudFullRes = nh.subscribe<sensor_msgs::PointCloud2>
             ("/livox_cloud", 100, laserCloudFullResHandler);
 #else
+    ros::Subscriber subLaserCloudCornerLast = nh.subscribe<sensor_msgs::PointCloud2>
+            ("/laser_cloud_sharp", 100, laserCloudCornerLastHandler);
     ros::Subscriber subLaserCloudFullRes = nh.subscribe<sensor_msgs::PointCloud2>
             ("/livox_undistort", 100, laserCloudFullResHandler);
 #endif
 
     ros::Subscriber subLaserCloudSurfLast = nh.subscribe<sensor_msgs::PointCloud2>
-            ("/livox_undistort", 100, laserCloudSurfLastHandler);
+            ("/laser_cloud_flat", 100, laserCloudSurfLastHandler);
     ros::Subscriber KeyPointPose6D = nh.subscribe<livox_loam_kp::KeyPointPose>
             ("/Pose6D_IMUKeyPoints", 100, KeyPointPose6DHandler);
 

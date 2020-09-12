@@ -426,34 +426,13 @@ void ImuProcess::Process(const MeasureGroup &meas, const KPPoseConstPtr &state_i
   /// Compensate lidar points with IMU rotation (with only rotation now)
   UndistortPcl(meas, state_in, *cur_pcl_un_);
 
-  t2 = omp_get_wtime();
-
-  {
-    static ros::Publisher pub_UndistortPcl =
-        nh.advertise<sensor_msgs::PointCloud2>("/livox_first_point", 100);
-    sensor_msgs::PointCloud2 pcl_out_msg;
-    pcl::toROSMsg(*laserCloudtmp, pcl_out_msg);
-    pcl_out_msg.header = pcl_in_msg->header;
-    pcl_out_msg.header.frame_id = "/livox";
-    pub_UndistortPcl.publish(pcl_out_msg);
-    laserCloudtmp->clear();
-  }
+  t2 = omp_get_wtime();s
 
   {
     static ros::Publisher pub_UndistortPcl =
         nh.advertise<sensor_msgs::PointCloud2>("/livox_undistort", 100);
     sensor_msgs::PointCloud2 pcl_out_msg;
     pcl::toROSMsg(*cur_pcl_un_, pcl_out_msg);
-    pcl_out_msg.header = pcl_in_msg->header;
-    pcl_out_msg.header.frame_id = "/livox";
-    pub_UndistortPcl.publish(pcl_out_msg);
-  }
-
-  {
-    static ros::Publisher pub_UndistortPcl =
-        nh.advertise<sensor_msgs::PointCloud2>("/livox_distort", 100);
-    sensor_msgs::PointCloud2 pcl_out_msg;
-    pcl::toROSMsg(*cur_pcl_in_, pcl_out_msg);
     pcl_out_msg.header = pcl_in_msg->header;
     pcl_out_msg.header.frame_id = "/livox";
     pub_UndistortPcl.publish(pcl_out_msg);
@@ -658,9 +637,9 @@ int main(int argc, char **argv)
   ros::NodeHandle nh;
   signal(SIGINT, SigHandle);
 
-  ros::Subscriber sub_pcl = nh.subscribe("/laser_cloud_flat", 100, pointcloud_cbk);
+  ros::Subscriber sub_pcl = nh.subscribe("/livox_pcl0", 100, pointcloud_cbk);
   ros::Subscriber sub_imu = nh.subscribe("/livox/imu", 100, imu_cbk);
-  ros::Subscriber sub_odo = nh.subscribe("/aft_mapped_to_init", 10, odo_cbk); //pubOdomAftMapped = nh.advertise<nav_msgs::Odometry> ("/aft_mapped_to_init", 10);
+  // ros::Subscriber sub_odo = nh.subscribe("/aft_mapped_to_init", 10, odo_cbk);
   ros::Subscriber sub_pose = nh.subscribe("/Pose6D_Solved", 10, pose_cbk);
   std::shared_ptr<ImuProcess> p_imu(new ImuProcess());
 
